@@ -5,17 +5,20 @@ Author: Raziel Siegman
 ----------
 Given a dictionary of all the words in the English language, the CharacterWordFinder (CWF) is a tool that allows one to find the words with the highest freuquency of a given letter(s):
 - Given a set of characters, the program can either find the words with the total highest freuqency of the inputted characters, or the words that have the highest proportion of said characters, relative to the length of the word.
-- The algorithm runs in O(nlogn) time, allowing it to find results instantly given a complete English dictionary of for a user performing a single request.
--  - This assumes that each individual word is small enough for a constant sort, which may not be true if the program is generalized and other txt files are used.
+- The algorithm runs in O(nlogn) time, allowing it to find results for a user performing a single request in inconsequential time, given a list of all the words in the English language.
+    - This assumes that each individual word is small enough to be sorted in constant time, which may not be true if the program is generalized for other purposes.
 - By default, the [txt file](https://github.com/razielsiegman/CharacterWordFinder/blob/main/WordList.txt) contains a list of all the words in the [English language](http://www.mieliestronk.com/wordlist.html).
-- - The program can be generalized to other languages, a subset of the English language, or other purposes entirely.  Doing so would involve replacing the text file, or making a trivial alteration to the code.
-- in the context of building a rules file, each node must have a single regulatory condition defined, whereas in the context of BRE:IN input generation, multiple regulatory conditions can be defined with comma-separated and range syntax (e.g. 1,3,5..17)
+    - The CWF can be generalized to other languages, a subset of the English language, or other purposes entirely.  Doing so would involve replacing the text file, or making a trivial alteration to the code.
+
 
 ## Usage
 ----------
-- Bullets
-- Bulltets
-    - Subbullets
+- The System will prompt the user to provide parameters of whether the program should find words with the highest total count or highest proportion of the inputted characters, the characters to be used, and the number of desired words.
+- To allow for generalizing the CWF in other contexts, the inputs are case sensitive, and as such, lower case characters should be used.
+- Sample input, for finding the 50 words that have the highest proportion (p) of the characters "a", "b", and "c".
     ```
-    code
+    java CharacterWordFinder
+    p
+    abc
+    50
     ```
