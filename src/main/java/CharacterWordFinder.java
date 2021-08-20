@@ -4,10 +4,15 @@ import java.util.*;
 public class CharacterWordFinder {
 
     private TreeMap <String, HashSet<String>> wordMap;
-    private boolean byProportion;
-    private char[] keys;
-    private int numOfWords;
+    private final boolean byProportion;
+    private final char[] keys;
+    private final int numOfWords;
 
+    /**
+     * The program, in its current state, must be generated from the main method.
+     *
+     * @param  args should contain no arguments.  All inputs will be prompted.
+     */
     public static void main (String args[]) throws IOException {
         Scanner console = new Scanner(System.in);
         System.out.println("Would you like to receive results based on proportion (\"p\") or count (\"c\")?");
@@ -23,15 +28,38 @@ public class CharacterWordFinder {
         }
         System.out.println("How many words would you like to receive?");
         int wordCount = console.nextInt();
-
-        CharacterWordFinder cwf = new CharacterWordFinder();
-        cwf.byProportion = pOrC.equals("p") ? true : false;
-        cwf.keys = chars.toCharArray();
-        cwf.numOfWords = wordCount;
+        boolean byProportion = pOrC.equals("p") ? true : false;
+        CharacterWordFinder cwf = new CharacterWordFinder(byProportion, chars.toCharArray(), wordCount);
         cwf.wordSorter();
     }
 
-    public void wordSorter() throws IOException {
+    /**
+     * Class constructor specifying user args.
+     *
+     * @param  byProportion specifies whether the algorithm should find the
+     *                      strings with the highest total count of
+     *                      characters, or the highest proportion relative to
+     *                      word length
+     * @param  keys         the characters that the outputted words should
+     *                      contain
+     * @param  numOfWords   the desired number of words for the program to print
+     */
+
+    public CharacterWordFinder(boolean byProportion, char[] keys, int numOfWords){
+        this.byProportion = byProportion;
+        this.keys = keys;
+        this.numOfWords = numOfWords;
+    }
+
+    /**
+     * Takes the words in the txt file and inserts them into a map, which is
+     * self-sorted using a custom comparator.  Check {@link #comparatorGen()}
+     * for more details.
+     *
+     * @throws IOException
+     */
+
+    private void wordSorter() throws IOException {
         Set<String> wordSet = new HashSet<String>();
         File file = new File("./WordList.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
@@ -51,7 +79,13 @@ public class CharacterWordFinder {
         this.output();
     }
 
-    public Comparator<String> comparatorGen(){
+    /**
+     * Custom comparator sorts words by the amount of user's inputted characters
+     * Either sorts words by overall quantity or proportion of characters
+     * relative to word length.
+     */
+
+    private Comparator<String> comparatorGen(){
         Comparator<String> byChars = (String s1, String s2)-> {
             double s1Count = 0, s2Count = 0;
             for(Character c : keys){
@@ -63,7 +97,11 @@ public class CharacterWordFinder {
         return byChars;
     }
 
-    public void output(){
+    /**
+     * Prints the desired amount of words
+     */
+
+    private void output(){
         int resCount = 0;
         Iterator<String> iter = wordMap.navigableKeySet().iterator();
         while(true){
